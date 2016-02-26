@@ -1,2 +1,45 @@
 ---
 # tasks file for nrser.nodenv
+
+- name: install nodenv (OiNutter version)
+  git:
+    repo: https://github.com/OiNutter/nodenv
+    dest: ~/.nodenv
+    update: "{{ nodenv_update }}"
+
+- name: add nodenv path line to .bash_profile
+  lineinfile:
+    line: export PATH="$HOME/.nodenv/bin:$PATH"
+    dest: ~/.bash_profile
+
+- name: add nodenv init line to .bash_profile
+  lineinfile:
+    line: eval "$(nodenv init -)"
+    dest: ~/.bash_profile
+
+- name: install node-build
+  git:
+    repo: https://github.com/OiNutter/node-build.git
+    dest: ~/.nodenv/plugins/node-build
+    update: "{{ nodenv_update }}"
+
+- name: read nodenv versions
+  shell: ~/.nodenv/bin/nodenv versions
+  register: installed_nodenv_versions
+  changed_when: false
+
+- name: install node.js versions
+  command: ~/.nodenv/bin/nodenv install {{ item }}
+  with_items: nodenv_nodes
+  when: installed_nodenv_versions.stdout.find(" " + item) == -1
+
+# set the global
+- name: get nodenv global ruby
+  shell: ~/.nodenv/bin/nodenv global
+  register: nodenv_global
+  changed_when: false
+  when: nodenv_global is defined
+
+- name: set nodenv global ruby
+  command: ~/.nodenv/bin/nodenv global {{ global }}
+  when: nodenv_global is defined and nodenv_global.stdout != nodenv_global
