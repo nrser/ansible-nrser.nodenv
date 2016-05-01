@@ -25,13 +25,13 @@
 
 - name: read nodenv versions
   shell: ~/.nodenv/bin/nodenv versions
-  register: installed_nodenv_versions
+  register: nodenv_installed_versions
   changed_when: false
 
 - name: install node.js versions
   command: ~/.nodenv/bin/nodenv install {{ item }}
-  with_items: nodenv_nodes
-  when: installed_nodenv_versions.stdout.find(" " + item) == -1
+  when: nodenv_installed_versions.stdout.find(' ' + item) == -1
+  with_items: "{{ nodenv_nodes }}"
 
 # set the global
 - name: get nodenv global ruby

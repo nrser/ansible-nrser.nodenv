@@ -1,4 +1,3 @@
 ---
 # defaults file for nrser.nodenv
-
 nodenv_update: false
