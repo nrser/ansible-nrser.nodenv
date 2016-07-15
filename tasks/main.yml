@@ -24,13 +24,29 @@
     update: "{{ nodenv_update }}"
 
 - name: read nodenv versions
-  shell: ~/.nodenv/bin/nodenv versions
-  register: nodenv_installed_versions
+  vars.rb:
+    namespace: nodenv
+    vars:
+      nodes: "{{ nodenv_nodes }}"
+    src: |
+      exe = "#{ ENV['HOME'] }/.nodenv/bin/nodenv"
+      vars = {}
+      vars[:installed_versions] = `#{ exe } versions --bare`.split
+      vars[:available_versions] = `#{ exe } install --list`.split
+      vars[:build_needs_update] = (nodes - vars[:available_versions]).length > 0
+      vars
   changed_when: false
+
+- name: install node-build
+  git:
+    repo: https://github.com/OiNutter/node-build.git
+    dest: ~/.nodenv/plugins/node-build
+    update: true
+  when: nodenv_build_needs_update
 
 - name: install node.js versions
   command: ~/.nodenv/bin/nodenv install {{ item }}
-  when: nodenv_installed_versions.stdout.find(' ' + item) == -1
+  when: item not in nodenv_installed_versions
   with_items: "{{ nodenv_nodes }}"
 
 # set the global

@@ -1,5 +1,7 @@
 ---
-dependencies: []
+dependencies:
+- nrser.rb
+
 galaxy_info:
   author: nrser
   description: nrser.nodenv ansible role
