@@ -52,10 +52,10 @@
 # set the global
 - name: get nodenv global ruby
   shell: ~/.nodenv/bin/nodenv global
-  register: nodenv_global
+  register: nodenv_current_global
   changed_when: false
   when: nodenv_global is defined
 
 - name: set nodenv global ruby
-  command: ~/.nodenv/bin/nodenv global {{ global }}
-  when: nodenv_global is defined and nodenv_global.stdout != nodenv_global
+  command: ~/.nodenv/bin/nodenv global {{ nodenv_global }}
+  when: nodenv_global is defined and nodenv_current_global.stdout != nodenv_global
