@@ -3,7 +3,7 @@
 
 - name: install nodenv (OiNutter version)
   git:
-    repo: https://github.com/OiNutter/nodenv
+    repo: "{{ nodenv_github_base_url }}/nodenv"
     dest: ~/.nodenv
     update: "{{ nodenv_update }}"
 
@@ -19,7 +19,7 @@
 
 - name: install node-build
   git:
-    repo: https://github.com/OiNutter/node-build.git
+    repo: "{{ nodenv_github_base_url }}/node-build.git"
     dest: ~/.nodenv/plugins/node-build
     update: "{{ nodenv_update }}"
 
@@ -39,7 +39,7 @@
 
 - name: install node-build
   git:
-    repo: https://github.com/OiNutter/node-build.git
+    repo: "{{ nodenv_github_base_url }}/node-build.git"
     dest: ~/.nodenv/plugins/node-build
     update: true
   when: nodenv_build_needs_update
