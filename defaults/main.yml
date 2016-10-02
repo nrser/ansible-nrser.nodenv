@@ -1,3 +1,4 @@
 ---
 # defaults file for nrser.nodenv
 nodenv_update: false
+nodenv_github_base_url: https://github.com/nodenv
