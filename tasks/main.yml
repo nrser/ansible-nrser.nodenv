@@ -11,7 +11,7 @@
   git:
     repo: "{{ nodenv_github_base_url }}/node-build.git"
     dest: ~/.nodenv/plugins/node-build
-    update: "{{ nodenv_update }}"
+    update: false
 
 - name: read nodenv versions
   vars.rb:
@@ -27,12 +27,12 @@
       vars
   changed_when: false
 
-- name: install node-build
+- name: update node-build
   git:
     repo: "{{ nodenv_github_base_url }}/node-build.git"
     dest: ~/.nodenv/plugins/node-build
     update: true
-  when: nodenv_build_needs_update
+  when: nodenv_update or nodenv_build_needs_update
 
 - name: install node.js versions
   command: ~/.nodenv/bin/nodenv install {{ item }}
