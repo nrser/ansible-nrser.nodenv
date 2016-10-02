@@ -1,9 +1,16 @@
 ---
-dependencies:
-- nrser.rb
-
 galaxy_info:
   author: nrser
   description: nrser.nodenv ansible role
   license: BSD
-  min_ansible_version: 1.2
+  min_ansible_version: 2.1
+  
+dependencies:
+- role: nrser.rb
+
+- role: nrser.profile
+  profile_pre:
+    nodenv: |
+      # init before everything else so that user paths supercede shims
+      export PATH="$HOME/.nodenv/bin:$PATH"
+      type nodenv > /dev/null 2>&1 && eval "$(nodenv init -)"

@@ -7,16 +7,6 @@
     dest: ~/.nodenv
     update: "{{ nodenv_update }}"
 
-- name: add nodenv path line to .bash_profile
-  lineinfile:
-    line: export PATH="$HOME/.nodenv/bin:$PATH"
-    dest: ~/.bash_profile
-
-- name: add nodenv init line to .bash_profile
-  lineinfile:
-    line: eval "$(nodenv init -)"
-    dest: ~/.bash_profile
-
 - name: install node-build
   git:
     repo: https://github.com/OiNutter/node-build.git
