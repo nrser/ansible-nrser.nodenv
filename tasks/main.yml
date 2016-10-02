@@ -1,7 +1,7 @@
 ---
 # tasks file for nrser.nodenv
 
-- name: install nodenv (OiNutter version)
+- name: install nodenv
   git:
     repo: "{{ nodenv_github_base_url }}/nodenv"
     dest: ~/.nodenv
