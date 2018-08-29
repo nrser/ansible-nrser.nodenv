@@ -8,9 +8,14 @@ galaxy_info:
 dependencies:
 - role: nrser.rb
 
-- role: nrser.profile
-  profile_pre:
-    nodenv: |
-      # init before everything else so that user paths supercede shims
-      export PATH="$HOME/.nodenv/bin:$PATH"
-      type nodenv > /dev/null 2>&1 && eval "$(nodenv init -)"
+# TODO  Getting rid of nrser.profile, replaced with the nrser.env/support/bash
+#       stuff, which should have some sort of roles or whatever for adding 
+#       things at some point, and is *designed* to be much easier for programs
+#       to manipulate than a bash source file.
+# 
+# - role: nrser.profile
+#   profile_pre:
+#     nodenv: |
+#       # init before everything else so that user paths supercede shims
+#       export PATH="$HOME/.nodenv/bin:$PATH"
+#       type nodenv > /dev/null 2>&1 && eval "$(nodenv init -)"
